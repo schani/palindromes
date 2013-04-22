@@ -30,23 +30,6 @@ let reverse i =
 let palindrome_arith n =
     n = reverse n
 
-let palindromes_between_noseq (lower: int64) (upper: int64) is_palindrome =
-    let mutable ps = []
-    let mutable i = lower
-    while i <= upper do
-        if is_palindrome i then
-            ps <- i :: ps
-        i <- i + 1L
-    ps
-
-let palindromes_squares_between_noseq (lower: int64) (upper: int64) is_palindrome =
-    let mutable ps = []
-    let sq = double >> sqrt >> int64
-    for i in palindromes_between_noseq (sq lower) (sq upper) is_palindrome do
-        if pown i 2 |> is_palindrome then
-            ps <- i :: ps
-    ps
-
 let palindromes_between (lower: int64) (upper: int64) is_palindrome =
     seq { lower .. upper }
     |> Seq.filter is_palindrome
