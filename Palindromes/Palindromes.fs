@@ -18,14 +18,18 @@ let palindrome_func n =
     let ds = digits n |> Seq.toList
     ds = List.rev ds
 
-let palindrome_arith n =
-    let rec go num reversed =
-        if num = 0L then
-            n = reversed
-        else
-            let dig  = num % 10L
-            go (num / 10L) (reversed * 10L + dig)
-    go n 0L
+type System.Int64 with
+    member i.Reversed =
+        let rec go num reversed =
+            if num = 0L then
+                reversed
+            else
+                let dig  = num % 10L
+                go (num / 10L) (reversed * 10L + dig)
+        go i 0L
+
+let palindrome_arith (n: int64) =
+    n = n.Reversed
 
 let palindromes_between (lower: int64) (upper: int64) is_palindrome =
     seq { lower .. upper }
