@@ -19,16 +19,13 @@ let palindrome_func n =
     ds = List.rev ds
 
 let palindrome_arith n =
-    let rec check n width =
-        let first = n / pown 10L (width - 1)
-        let last  = n % 10L
-        match width with
-        | 1 -> true
-        | 2 -> first = last
-        | _ ->
-            let inner = n / 10L - first * pown 10L (width - 2)
-            first = last && check inner (width - 2)
-    check n (width n)
+    let rec go num reversed =
+        if num = 0L then
+            n = reversed
+        else
+            let dig  = num % 10L
+            go (num / 10L) (reversed * 10L + dig)
+    go n 0L
 
 let palindromes_between (lower: int64) (upper: int64) is_palindrome =
     seq { lower .. upper }
