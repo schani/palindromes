@@ -43,9 +43,6 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Util.fs" />
-    <Compile Include="Palindromes.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <PropertyGroup>
