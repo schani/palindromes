@@ -2,4 +2,7 @@ bin
 obj
 *.userprefs
 .DS_Store
+*.o
+palindrome
+*.hi
 *.exe
