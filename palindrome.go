@@ -5,8 +5,8 @@ import (
   "math"
 )
 
-func palindrome(num int) bool {
-  var n, reverse, dig int
+func palindrome (num int64) bool {
+  var n, reverse, dig int64
   n = num
   reverse = 0
   for (num > 0){
@@ -21,10 +21,10 @@ func main() {
   var cases int
   fmt.Scan(&cases)
   for i := 0; i < cases; i++ {
-    var found, start, finish, sqrt_start, sqrt_finish, square int
+    var found, start, finish, sqrt_start, sqrt_finish, square int64
     fmt.Scan(&start, &finish)
-    sqrt_start = int(math.Sqrt(float64(start)))
-    sqrt_finish = int(math.Sqrt(float64(finish)))
+    sqrt_start = int64(math.Sqrt(float64(start)))
+    sqrt_finish = int64(math.Sqrt(float64(finish)))
     for j := sqrt_start; j <= sqrt_finish; j++ {
       if palindrome(j){
         square = j*j
