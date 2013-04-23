@@ -1,5 +1,3 @@
-module Palindrome where
-
 import Data.Int
 import Control.Monad
 
