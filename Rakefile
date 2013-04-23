@@ -20,5 +20,5 @@ end
 task :run => :build do
 	sh "time mono-sgen palindrome.exe tests.txt"
 	sh "time ./palindrome-hs tests.txt"
-	sh "cat tests.txt | tail +2 | time ./palindrome-go"
+	sh "cat tests.txt | time ./palindrome-go"
 end
