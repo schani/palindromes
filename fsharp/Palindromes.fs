@@ -25,10 +25,11 @@ let palindromes_squares_between (lower: int64) (upper: int64) =
 
 [<EntryPoint>]
 let main args =
-    let tests = args.[0] |> File.ReadLines |> Seq.skip 1
-    for test in tests do
+    let total = Console.ReadLine ()
+    let mutable test = Console.ReadLine ()
+    while test <> null do
         let [|upper; lower|] = test.Split([|' '|]) |> Array.map int64
-        printf "%A %A " upper lower
         let count = palindromes_squares_between upper lower |> Seq.length
         printfn "%d" count
+        test <- Console.ReadLine ()
     0

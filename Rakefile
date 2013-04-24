@@ -1,24 +1,49 @@
 require "rake/clean"
+require "benchmark"
 
-CLEAN.include "*.exe"
-CLEAN.include "*.hi"
-CLEAN.include "*.o"
-CLEAN.include "palindrome-hs"
-CLEAN.include "palindrome-go"
+TESTS = File.expand_path "tests.txt"
+
+SOLUTIONS = [
+	{
+		:dir => "go",
+		:build => "go build Palindromes.go",
+		:run => "./Palindromes"
+	},
+	{
+		:dir => "fsharp",
+		:build => "fsharpc Palindromes.fs",
+		:run => "mono-sgen Palindromes.exe"
+	},
+	{
+		:dir => "haskell",
+		:build => "ghc --make -O2 Palindromes.hs",
+		:run => "./Palindromes"
+	},
+]
 
 task :default => :run
 
-task :build do
-	puts "* Building F# solution..."
-	sh "fsharpc Palindromes/Program.fs -o palindrome.exe"
-	puts "* Building Haskell solution..."
-	sh "ghc --make -O2 palindrome.hs -o palindrome-hs"
-	puts "* Building Go solution..."
-	sh "go build -o palindrome-go palindrome.go"
+SOLUTIONS.each do |solution|
+	lang = solution[:dir]
+	namespace :build do
+		desc "Build #{lang} solution"
+		task lang do
+			Dir.chdir(lang) do
+				sh solution[:build]
+			end
+		end
+	end
+	namespace :run do
+		desc "Run #{lang} solution"
+		task lang => "build:#{lang}" do
+			Dir.chdir(lang) do
+				sh "cat #{TESTS} | #{solution[:run]}"
+			end
+		end
+	end
+	desc "Run all solutions"
+	task :run => "run:#{lang}"
+	desc "Build all solutions"
+	task :build => "build:#{lang}"
 end
 
-task :run => :build do
-	sh "time mono-sgen palindrome.exe tests.txt"
-	sh "time ./palindrome-hs tests.txt"
-	sh "cat tests.txt | time ./palindrome-go"
-end
